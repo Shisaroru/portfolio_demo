@@ -1,2 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Kollektif&family=Sofia+Pro:wght@400;500;600;700&display=swap');
+
 @import 'tailwindcss';
 @import '@nuxt/ui';
+
+@theme {
+  --font-cormorant: 'Cormorant', serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-kollektif: 'Kollektif', sans-serif;
+  --font-sofia-pro: 'Sofia Pro', sans-serif;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f7f6e5;
+  color: #452829;
+}
