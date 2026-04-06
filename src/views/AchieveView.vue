@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { animate } from 'animejs'
 import { useNavigationStore } from '../stores/navigationStore'
+import achieve1 from '@/assets/images/achieve_1.png'
+import achieve2 from '@/assets/images/achieve_2.png'
+import achieve3 from '@/assets/images/achieve_3.png'
 
 interface PagingContent {
   imageUrl: string
@@ -17,7 +20,7 @@ const imageContainer = ref<HTMLElement | null>(null)
 
 const pagingContents: PagingContent[] = [
   {
-    imageUrl: '/src/assets/images/achieve_1.png',
+    imageUrl: achieve1,
     description: [
       'Tham gia xây dựng thông điệp và định hướng hình ảnh thương hiệu nhằm bảo đảm sự nhất quán trên các nền tảng truyền thông.',
       'Tham gia xây dựng kế hoạch chuyển đổi và phát triển thương hiệu. Xây dựng kế hoạch truyền thông và định hướng nội dung cho các kênh social media. Lên ý tưởng, phát triển và sản xuất nội dung đa nền tảng (Facebook, YouTube, TikTok) bao gồm video, hình ảnh, bài viết phục vụ truyền thông thương hiệu và sản phẩm.',
@@ -29,7 +32,7 @@ const pagingContents: PagingContent[] = [
     ],
   },
   {
-    imageUrl: '/src/assets/images/achieve_2.png',
+    imageUrl: achieve2,
     description: [
       'Sáng tạo nội dung, lên ý tưởng video các chiến dịch truyền thông thương hiệu, sản phẩm.(Truyền thông thương hiệu, Giới thiệu sản phẩm, Chuyên đề sản phẩm, Video Ads, Video Sự Kiện,...)',
       'Chịu trách nhiệm phát triển nội dung video trên các kênh social: Youtube, Facebook, Tiktok...',
@@ -41,7 +44,7 @@ const pagingContents: PagingContent[] = [
     bullet: true,
   },
   {
-    imageUrl: '/src/assets/images/achieve_3.png',
+    imageUrl: achieve3,
     description: [
       'Đề xuất đề tài, lên ý tưởng cách khai thác nội dung và trực tiếp sản xuất các video ở dạng: Tin tức thời sự, phóng sự đời sống, sự kiện xã hội, youtube...',
       'Phối hợp cùng team Thiết kế, Dựng phim để hoàn thiện tin bài.',

@@ -11,25 +11,25 @@ const navItems = [
     children: [
       {
         label: 'Long Van Group',
-        to: 'works/project-1',
+        to: '/works/project-1',
       },
       {
         label: 'Ton Pomina',
-        to: 'works/project-2',
+        to: '/works/project-2',
       },
       {
         label: 'Sai Gon TV',
-        to: 'works/project-3',
+        to: '/works/project-3',
       },
     ],
   },
   {
     label: 'Achieve',
-    to: 'achieve',
+    to: '/achieve',
   },
   {
     label: 'Skill',
-    to: 'skill',
+    to: '/skill',
   },
 ]
 
