@@ -35,8 +35,8 @@ const skills = ref<Skill[]>([
       { description: 'Canva, CapCut' },
       {
         description: 'Adobe Illustrator, Photoshop, Premiere',
-        children: [{ description: 'Ứng dụng AI nhằm tối ưu hiệu quả công việc' }],
       },
+      { description: 'Ứng dụng AI nhằm tối ưu hiệu quả công việc' },
     ],
   },
   {
@@ -57,17 +57,25 @@ navigationStore.resetFromAchieve()
 </script>
 
 <template>
-  <section id="skill" class="min-h-screen bg-cream py-32 px-4">
+  <section id="skill" class="min-h-screen bg-cream py-32 px-4 my-4">
     <div class="max-w-7xl mx-auto w-full">
-      <div class="flex items-center justify-center">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <div aria-hidden="true" class="hidden md:block"></div>
+
         <div class="w-full">
           <template v-for="(skill, index) in skills" :key="index">
             <div class="grid grid-cols-2 md:grid-cols-2 gap-6 py-8">
               <div class="bg-cream p-6 text-center">
-                <p class="font-cormorant text-xl text-maroon">{{ skill.title }}</p>
+                <p v-text-reveal class="font-cormorant text-xl text-maroon">
+                  {{ skill.title }}
+                </p>
               </div>
               <div>
-                <li v-for="(description, descIndex) in skill.descriptions" :key="descIndex">
+                <li
+                  v-text-reveal="{ delayStep: 500 }"
+                  v-for="(description, descIndex) in skill.descriptions"
+                  :key="descIndex"
+                >
                   {{ description.description }}
                   <template v-if="description.children">
                     <li
@@ -81,7 +89,6 @@ navigationStore.resetFromAchieve()
                 </li>
               </div>
             </div>
-            <hr />
           </template>
         </div>
       </div>

@@ -16,7 +16,7 @@ const contactEmail = 'trucphuong86@gmail.com'
         <div class="text-right">
           <a
             :href="`mailto:${contactEmail}`"
-            class="font-sofia-pro text-maroon hover:text-maroon/70 transition-colors"
+            class="font-cormorant text-maroon hover:text-maroon/70 transition-colors"
           >
             {{ contactEmail }}
           </a>

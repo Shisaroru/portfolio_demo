@@ -1,27 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
-const navItems = [
+const route = useRoute()
+
+const workChildren = [
+  {
+    label: 'Long Van Group',
+    to: '/works/1',
+  },
+  {
+    label: 'Ton Pomina',
+    to: '/works/2',
+  },
+  {
+    label: 'Sai Gon TV',
+    to: '/works/3',
+  },
+]
+
+const navItems = computed(() => [
   {
     label: 'About me',
     to: '/',
   },
   {
     label: 'Works',
-    children: [
-      {
-        label: 'Long Van Group',
-        to: '/works/project-1',
-      },
-      {
-        label: 'Ton Pomina',
-        to: '/works/project-2',
-      },
-      {
-        label: 'Sai Gon TV',
-        to: '/works/project-3',
-      },
-    ],
+    active: route.path.startsWith('/works'),
+    children: workChildren,
   },
   {
     label: 'Achieve',
@@ -31,17 +37,26 @@ const navItems = [
     label: 'Skill',
     to: '/skill',
   },
-]
+])
 
 const isOpen = ref(false)
 
-const mobileNavItems = navItems.map((item) => ({
-  label: item.label,
-  to: item.to,
-  click: () => {
-    isOpen.value = false
-  },
-}))
+const navigationMenuUi = {
+  link: 'px-5 font-cormorant text-lg',
+  childLink: 'font-cormorant',
+  childLinkLabel: 'font-cormorant text-base',
+  childDescription: 'font-cormorant',
+}
+
+const mobileNavItems = computed(() =>
+  navItems.value.map((item) => ({
+    label: item.label,
+    to: item.to ?? item.children?.[0]?.to,
+    click: () => {
+      isOpen.value = false
+    },
+  })),
+)
 </script>
 
 <template>
@@ -50,16 +65,34 @@ const mobileNavItems = navItems.map((item) => ({
       <div class="flex justify-between items-center h-20">
         <!-- Logo/Brand -->
         <div class="shrink-0">
-          <span class="font-kollektif text-2xl font-bold text-maroon">Portfolio</span>
+          <span class="font-kollektif text-2xl font-bold text-maroon"></span>
         </div>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:block">
           <UNavigationMenu
             :items="navItems"
+            :ui="navigationMenuUi"
             orientation="horizontal"
             content-orientation="vertical"
-          />
+          >
+            <template #item-label="{ item, active }">
+              <span
+                class="font-cormorant text-lg transition-colors"
+                :class="active ? 'text-white' : 'text-maroon'"
+              >
+                {{ item.label }}
+              </span>
+            </template>
+            <template #item-trailing="{ item, active }">
+              <UIcon
+                v-if="item.children?.length"
+                name="i-heroicons-chevron-down-20-solid"
+                class="size-5 shrink-0 transition-[color,transform] duration-200 group-data-[state=open]:rotate-180"
+                :class="active ? 'text-white' : 'text-maroon'"
+              />
+            </template>
+          </UNavigationMenu>
         </div>
 
         <!-- Mobile menu button -->
@@ -68,6 +101,7 @@ const mobileNavItems = navItems.map((item) => ({
             icon="i-heroicons-bars-3"
             color="primary"
             variant="ghost"
+            class="u-button-hover-neutral"
             @click="isOpen = !isOpen"
             aria-label="Toggle navigation menu"
           />
@@ -90,7 +124,7 @@ const mobileNavItems = navItems.map((item) => ({
               :key="item.label"
               :to="item.to"
               variant="ghost"
-              class="w-full justify-start font-cormorant text-lg text-maroon hover:bg-cream"
+              class="u-button-hover-neutral w-full justify-start font-cormorant text-lg text-maroon"
               @click="item.click"
             >
               {{ item.label }}

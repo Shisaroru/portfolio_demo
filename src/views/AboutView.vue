@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <section id="about" class="min-h-screen flex items-center justify-center bg-cream py-16 px-4">
     <div class="max-w-7xl mx-auto w-full">
@@ -39,9 +37,9 @@
             </p>
           </div>
 
-          <hr />
-
-          <blockquote class="font-cormorant text-base leading-relaxed text-maroon text-center">
+          <blockquote
+            class="font-cormorant text-base leading-relaxed text-maroon text-center mt-16"
+          >
             <!-- Content will be added here -->
             <p class="italic mb-4">
               “A storyteller of brand narratives through a creative communication lens, helping to
