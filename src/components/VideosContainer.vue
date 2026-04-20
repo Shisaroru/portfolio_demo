@@ -1,27 +1,31 @@
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 px-12 pb-5">
-    <iframe
+    <div
       v-for="(videoUrl, index) in videoUrls"
       :key="index"
-      :ref="(el) => setVideoRef(index, el as HTMLIFrameElement)"
+      :ref="(el) => setVideoRef(index, el as HTMLDivElement)"
       :data-video-id="index"
-      class="w-full h-80 rounded-lg shadow-lg video-item"
+      class="u-image-zoom-hover-container w-full h-80 rounded-lg shadow-lg video-item overflow-hidden"
       :style="{
         transform: `translateX(${index % 2 === 0 ? '-' : ''}1000px)`,
       }"
-      :src="`https://www.youtube.com/embed/${videoUrl}`"
-      title="YouTube video player"
-      frameborder="0"
-      allow="
-        accelerometer;
-        autoplay;
-        clipboard-write;
-        encrypted-media;
-        gyroscope;
-        picture-in-picture;
-      "
-      allowfullscreen
-    ></iframe>
+    >
+      <iframe
+        class="u-image-zoom-hover h-full w-full"
+        :src="`https://www.youtube.com/embed/${videoUrl}`"
+        title="YouTube video player"
+        frameborder="0"
+        allow="
+          accelerometer;
+          autoplay;
+          clipboard-write;
+          encrypted-media;
+          gyroscope;
+          picture-in-picture;
+        "
+        allowfullscreen
+      ></iframe>
+    </div>
   </div>
 </template>
 
@@ -35,10 +39,9 @@ interface Props {
 
 defineProps<Props>()
 
-const videoRefs = ref<Record<number, HTMLIFrameElement>>({})
-const triggerViewportFactor = 1.05
+const videoRefs = ref<Record<number, HTMLDivElement>>({})
 
-const setVideoRef = (index: number, el: HTMLIFrameElement) => {
+const setVideoRef = (index: number, el: HTMLDivElement) => {
   if (el) {
     videoRefs.value[index] = el
   }

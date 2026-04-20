@@ -59,7 +59,7 @@ watch(page, (newPage) => {
             <UButton
               v-else
               variant="ghost"
-              class="u-button-hover-neutral justify-self-start font-inter text-lg text-maroon"
+              class="u-button-hover-neutral u-hover-zoom justify-self-start font-inter text-lg text-maroon"
               @click="page--"
             >
               BACK
@@ -69,7 +69,7 @@ watch(page, (newPage) => {
             <UButton
               v-else
               variant="ghost"
-              class="u-button-hover-neutral justify-self-end font-inter text-lg text-maroon"
+              class="u-button-hover-neutral u-hover-zoom justify-self-end font-inter text-lg text-maroon"
               @click="page++"
             >
               NEXT

@@ -153,7 +153,7 @@ watch(
             :class="imageWrapperClasses"
           >
             <div
-              class="pointer-events-auto w-full max-w-xl aspect-square rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
+              class="pointer-events-auto u-image-zoom-hover-container w-full max-w-xl aspect-square rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
               :class="{
                 'cursor-pointer':
                   route.name === 'Achieve' &&
@@ -163,7 +163,7 @@ watch(
               @click="handleImageClick"
             >
               <img
-                class="h-full w-full object-contain object-center"
+                class="u-image-zoom-hover h-full w-full object-contain object-center"
                 :src="getCurrentImageUrl()"
                 alt="Achievement image"
               />
@@ -177,10 +177,10 @@ watch(
         >
           <div
             ref="transitionImageContainer"
-            class="pointer-events-auto w-full max-w-xl aspect-square rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
+            class="pointer-events-auto u-image-zoom-hover-container w-full max-w-xl aspect-square rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
           >
             <img
-              class="h-full w-full object-contain object-center"
+              class="u-image-zoom-hover h-full w-full object-contain object-center"
               :src="transitionImageUrl || ''"
               alt="Achievement image"
             />

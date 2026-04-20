@@ -27,3 +27,25 @@ body {
 @utility u-button-hover-neutral {
   @apply transition-colors hover:bg-gray-500! hover:text-white!;
 }
+
+@utility u-hover-zoom {
+  @apply transition-transform duration-300 ease-out will-change-transform;
+}
+
+@utility u-image-zoom-hover {
+  @apply transition-transform duration-300 ease-out;
+}
+
+@utility u-image-zoom-hover-container {
+  @apply overflow-hidden;
+}
+
+@media (hover: hover) {
+  .u-hover-zoom:hover {
+    transform: scale(1.06);
+  }
+
+  .u-image-zoom-hover-container:hover .u-image-zoom-hover {
+    transform: scale(1.06);
+  }
+}

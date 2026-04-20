@@ -79,10 +79,14 @@
         <!-- Right side: Image -->
         <div class="flex items-center justify-center">
           <div
-            class="w-full aspect-square rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
+            class="u-image-zoom-hover-container w-full aspect-square rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
           >
             <!-- Placeholder for image -->
-            <img src="/src/assets/images/about.png" alt="About image" />
+            <img
+              class="u-image-zoom-hover h-full w-full object-contain object-center"
+              src="/src/assets/images/about.png"
+              alt="About image"
+            />
           </div>
         </div>
       </div>
