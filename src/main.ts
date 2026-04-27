@@ -7,6 +7,7 @@ import ui from '@nuxt/ui/vue-plugin'
 import App from './App.vue'
 import router from './router'
 import { splitLinesLoopDirective } from './directives/textRevealAnimation'
+import { initLenis } from './lib/lenis'
 
 const app = createApp(App)
 
@@ -16,3 +17,4 @@ app.use(ui)
 app.directive('text-reveal', splitLinesLoopDirective)
 
 app.mount('#app')
+initLenis()

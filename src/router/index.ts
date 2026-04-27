@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { scrollToTop } from '@/lib/lenis'
 
 const routes: readonly RouteRecordRaw[] = [
   { path: '/', name: 'About', component: () => import('../views/AboutView.vue') },
@@ -35,41 +36,11 @@ const router = createRouter({
   routes,
 })
 
-const smoothScrollToTop = (duration = 250) => {
-  return new Promise<void>((resolve) => {
-    const startY = window.scrollY
+router.beforeEach(async (_, from) => {
+  if (from.name) {
+    await scrollToTop()
+  }
 
-    if (startY <= 0) {
-      resolve()
-      return
-    }
-
-    const startTime = performance.now()
-
-    const easeOutCubic = (progress: number) => 1 - Math.pow(1 - progress, 3)
-
-    const step = (currentTime: number) => {
-      const elapsed = currentTime - startTime
-      const progress = Math.min(elapsed / duration, 1)
-      const easedProgress = easeOutCubic(progress)
-      const nextY = Math.round(startY * (1 - easedProgress))
-
-      window.scrollTo(0, nextY)
-
-      if (progress < 1) {
-        requestAnimationFrame(step)
-      } else {
-        window.scrollTo(0, 0)
-        resolve()
-      }
-    }
-
-    requestAnimationFrame(step)
-  })
-}
-
-router.beforeEach(async () => {
-  await smoothScrollToTop()
   return true
 })
 
