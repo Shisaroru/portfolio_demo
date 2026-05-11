@@ -9,13 +9,10 @@ const emit = defineEmits<{
 
 const router = useRouter()
 const minimumDisplayDuration = 3000
-const youtubeEmbedTimeout = 8000
 const blindCount = 10
 const blindAnimationDuration = 750
 const blindStaggerDelay = 70
 const blindsRevealDuration = blindAnimationDuration + blindStaggerDelay * (blindCount - 1)
-const preloadVideoIds = ['dQw4w9WgXcQ', '3JZ_D3ELwOQ', 'eY52Zsg-KVI', 'DLzxrzFCyOs', '9bZkp7q19f0']
-const preloadFrameRefs = ref<Record<number, HTMLIFrameElement>>({})
 const isRevealing = ref(false)
 
 const waitForWindowLoad = () => {
@@ -48,41 +45,6 @@ const waitForMinimumDuration = () => {
   })
 }
 
-const setPreloadFrameRef = (index: number, el: HTMLIFrameElement | null) => {
-  if (el) {
-    preloadFrameRefs.value[index] = el
-    return
-  }
-
-  delete preloadFrameRefs.value[index]
-}
-
-const waitForYoutubeEmbeds = () => {
-  return Promise.all(
-    preloadVideoIds.map((_, index) => {
-      return new Promise<void>((resolve) => {
-        const frame = preloadFrameRefs.value[index]
-
-        if (!frame) {
-          resolve()
-          return
-        }
-
-        let isResolved = false
-        const finish = () => {
-          if (isResolved) return
-          isResolved = true
-          resolve()
-        }
-
-        frame.addEventListener('load', finish, { once: true })
-        frame.addEventListener('error', finish, { once: true })
-        window.setTimeout(finish, youtubeEmbedTimeout)
-      })
-    }),
-  )
-}
-
 const lockScroll = () => {
   document.body.style.overflow = 'hidden'
 }
@@ -100,7 +62,6 @@ onMounted(async () => {
     waitForWindowLoad(),
     waitForFonts(),
     waitForMinimumDuration(),
-    waitForYoutubeEmbeds(),
   ])
   await waitForPaint(2)
 
@@ -122,19 +83,6 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="absolute left-0 top-0 h-0 w-0 overflow-hidden opacity-0 pointer-events-none">
-    <iframe
-      v-for="(videoId, index) in preloadVideoIds"
-      :key="videoId"
-      :ref="(el) => setPreloadFrameRef(index, el as HTMLIFrameElement | null)"
-      :src="`https://www.youtube.com/embed/${videoId}`"
-      loading="eager"
-      tabindex="-1"
-      aria-hidden="true"
-      title="Preloading YouTube video"
-    ></iframe>
-  </div>
-
   <Transition name="loader-fade">
     <div
       class="fixed inset-0 z-[9999] flex items-center justify-center bg-cream px-6"
@@ -161,7 +109,7 @@ onBeforeUnmount(() => {
           <div class="loader-bar h-full bg-maroon"></div>
         </div>
         <p class="font-cormorant text-lg italic text-maroon/80">
-          Preparing fonts, motion, layout, and video embeds...
+          Preparing fonts, motion, and layout...
         </p>
       </div>
     </div>

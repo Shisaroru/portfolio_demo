@@ -10,7 +10,10 @@
         {{ title }}
       </h1>
 
-      <div ref="textContentRef" class="space-y-4 text-black text-center max-w-4xl font-cormorant">
+      <div
+        ref="textContentRef"
+        class="space-y-4 text-black text-center max-w-4xl font-cormorant font-bold"
+      >
         <p v-if="dissapearTextContent" class="overflow-hidden opacity-0">
           {{ dissapearTextContent }}
         </p>

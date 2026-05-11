@@ -37,6 +37,10 @@ const navItems = computed(() => [
     label: 'Skill',
     to: '/skill',
   },
+  {
+    label: 'Education',
+    to: '/education',
+  },
 ])
 
 const isOpen = ref(false)

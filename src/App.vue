@@ -19,6 +19,7 @@ const suppressDefaultImageTransition = ref(false)
 const routeContent = ref<HTMLElement | null>(null)
 const isAppLoading = ref(true)
 const showLoadingScreen = ref(true)
+const cachedViewNames = ['LongVanView', 'PoniaView', 'SaiGonTVView']
 
 const shouldShowImage = () => {
   return route.name === 'Achieve' || route.name === 'Skill'
@@ -188,9 +189,13 @@ watch(
         </div>
 
         <div ref="routeContent" class="flex-1">
-          <Transition name="fade" mode="out-in">
-            <RouterView :key="route.fullPath" />
-          </Transition>
+          <RouterView v-slot="{ Component }">
+            <Transition name="fade" mode="out-in">
+              <KeepAlive :include="cachedViewNames">
+                <component :is="Component" />
+              </KeepAlive>
+            </Transition>
+          </RouterView>
         </div>
       </div>
       <Footer />
