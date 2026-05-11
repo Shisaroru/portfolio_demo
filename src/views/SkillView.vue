@@ -52,15 +52,25 @@ const skills = ref<Skill[]>([
   },
 ])
 
-// Reset the flag when component mounts
-navigationStore.resetFromAchieve()
+const skillImageUrl =
+  navigationStore.pagingContents[navigationStore.pagingContents.length - 1]?.imageUrl || ''
 </script>
 
 <template>
   <section id="skill" class="min-h-screen bg-cream py-32 px-4 my-4">
     <div class="max-w-7xl mx-auto w-full">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        <div aria-hidden="true" class="hidden md:block"></div>
+        <div class="hidden md:flex md:justify-center md:px-4">
+          <div
+            class="u-image-zoom-hover-container w-full max-w-xl aspect-square rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
+          >
+            <img
+              class="u-image-zoom-hover h-full w-full object-contain object-center"
+              :src="skillImageUrl"
+              alt="Skill image"
+            />
+          </div>
+        </div>
 
         <div class="w-full">
           <template v-for="(skill, index) in skills" :key="index">

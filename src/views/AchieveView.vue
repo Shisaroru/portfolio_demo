@@ -13,7 +13,6 @@ watch(
   (newRoute) => {
     if (newRoute === 'Achieve') {
       page.value = navigationStore.currentPage
-      navigationStore.setAchieveExiting(false)
     }
   },
   { immediate: true },
@@ -32,13 +31,7 @@ watch(page, (newPage) => {
   >
     <div class="max-w-7xl mx-auto w-full">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div
-          class="flex min-h-112 flex-col transition-opacity duration-300 ease-out"
-          :class="{
-            'opacity-0 pointer-events-none': navigationStore.isAchieveExiting,
-            'opacity-100': !navigationStore.isAchieveExiting,
-          }"
-        >
+        <div class="flex min-h-112 flex-col transition-opacity duration-300 ease-out">
           <Transition name="page-fade" mode="out-in">
             <div
               :key="`${page}-${navigationStore.pagingContents[page]?.imageUrl}`"
@@ -77,7 +70,20 @@ watch(page, (newPage) => {
           </div>
         </div>
 
-        <div aria-hidden="true" class="hidden md:block"></div>
+        <div class="hidden md:flex md:justify-center md:px-4">
+          <Transition name="image-fade" mode="out-in">
+            <div
+              :key="navigationStore.pagingContents[page]?.imageUrl"
+              class="u-image-zoom-hover-container w-full max-w-xl aspect-square rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
+            >
+              <img
+                class="u-image-zoom-hover h-full w-full object-contain object-center"
+                :src="navigationStore.pagingContents[page]?.imageUrl"
+                alt="Achievement image"
+              />
+            </div>
+          </Transition>
+        </div>
       </div>
     </div>
   </section>
@@ -96,6 +102,21 @@ watch(page, (newPage) => {
 
 .page-fade-enter-to,
 .page-fade-leave-from {
+  opacity: 1;
+}
+
+.image-fade-enter-active,
+.image-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.image-fade-enter-from,
+.image-fade-leave-to {
+  opacity: 0;
+}
+
+.image-fade-enter-to,
+.image-fade-leave-from {
   opacity: 1;
 }
 </style>

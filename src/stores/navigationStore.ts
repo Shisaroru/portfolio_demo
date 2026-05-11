@@ -11,8 +11,6 @@ export interface PagingContent {
 }
 
 export const useNavigationStore = defineStore('navigation', () => {
-  const fromAchieve = ref(false)
-  const isAchieveExiting = ref(false)
   const currentPage = ref<number>(0)
 
   const pagingContents: PagingContent[] = [
@@ -51,18 +49,6 @@ export const useNavigationStore = defineStore('navigation', () => {
     },
   ]
 
-  const setFromAchieve = (value: boolean) => {
-    fromAchieve.value = value
-  }
-
-  const resetFromAchieve = () => {
-    fromAchieve.value = false
-  }
-
-  const setAchieveExiting = (value: boolean) => {
-    isAchieveExiting.value = value
-  }
-
   const setCurrentPage = (page: number) => {
     currentPage.value = page
   }
@@ -72,13 +58,8 @@ export const useNavigationStore = defineStore('navigation', () => {
   }
 
   return {
-    fromAchieve,
-    isAchieveExiting,
     currentPage,
     pagingContents,
-    setFromAchieve,
-    resetFromAchieve,
-    setAchieveExiting,
     setCurrentPage,
     resetCurrentPage,
   }
