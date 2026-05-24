@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { animate } from 'animejs'
-import { computed, ref } from 'vue'
+import { scrollToElement } from '@/lib/lenis'
+import { computed, nextTick, ref, watch } from 'vue'
 import achieve1 from '@/assets/images/achieve_1.png'
 import achieve2 from '@/assets/images/achieve_2.png'
 import achieve3 from '@/assets/images/achieve_3.png'
@@ -10,6 +11,7 @@ interface AchievementSection {
   label: string
   content: string[]
   image: string
+  imagePosition: string
   value: string
 }
 
@@ -18,6 +20,7 @@ const sections: AchievementSection[] = [
     label: 'LONG VÂN GROUP',
     value: 'long-van-group',
     image: achieve1,
+    imagePosition: 'object-[38%_center]',
     content: [
       'Tham gia xây dựng thông điệp và định hướng hình ảnh thương hiệu nhằm bảo đảm sự nhất quán trên các nền tảng truyền thông.',
       'Tham gia xây dựng kế hoạch chuyển đổi và phát triển thương hiệu.',
@@ -34,6 +37,7 @@ const sections: AchievementSection[] = [
     label: 'CÔNG TY CỔ PHẦN TÔN POMINA',
     value: 'ton-pomina',
     image: achieve2,
+    imagePosition: 'object-center',
     content: [
       'Sáng tạo nội dung, lên ý tưởng video các chiến dịch truyền thông thương hiệu, sản phẩm.(Truyền thông thương hiệu, Giới thiệu sản phẩm, Chuyên đề sản phẩm, Video Ads, Video Sự Kiện,...)',
       'Chịu trách nhiệm phát triển nội dung video trên các kênh social: Youtube, Facebook, Tiktok...',
@@ -47,6 +51,7 @@ const sections: AchievementSection[] = [
     label: 'CÔNG TY CỔ PHẦN TRUYỀN THÔNG SAIGONTV',
     value: 'saigontv',
     image: achieve3,
+    imagePosition: 'object-[38%_center]',
     content: [
       'Đề xuất đề tài, lên ý tưởng cách khai thác nội dung và trực tiếp sản xuất các video ở dạng: Tin tức thời sự, phóng sự đời sống, sự kiện xã hội, youtube...',
       'Phối hợp cùng team Thiết kế, Dựng phim để hoàn thiện tin bài.',
@@ -56,11 +61,35 @@ const sections: AchievementSection[] = [
 ]
 
 const openAccordion = ref<string | undefined>(undefined)
+const accordionContainer = ref<HTMLElement | null>(null)
 
 const activeImage = computed(() => {
   return (
     sections.find((section) => section.value === openAccordion.value)?.image ?? achievePlaceholder
   )
+})
+
+const activeImagePosition = computed(() => {
+  return (
+    sections.find((section) => section.value === openAccordion.value)?.imagePosition ??
+    'object-[78%_center]'
+  )
+})
+
+watch(openAccordion, async (value) => {
+  if (!value) return
+
+  await nextTick()
+
+  const trigger = accordionContainer.value?.querySelector<HTMLElement>(
+    'button[aria-expanded="true"], [data-state="open"] button, [data-state="open"] [data-slot="trigger"]',
+  )
+
+  if (!trigger) return
+
+  void scrollToElement(trigger, {
+    offset: -24,
+  })
 })
 
 const handleImageEnter = (element: Element, done: () => void) => {
@@ -102,7 +131,7 @@ const handleImageLeave = (element: Element, done: () => void) => {
   >
     <div class="max-w-7xl mx-auto w-full">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        <div class="flex min-h-112 flex-col">
+        <div ref="accordionContainer" class="flex min-h-112 flex-col">
           <UAccordion
             v-model="openAccordion"
             :items="sections"
@@ -142,7 +171,7 @@ const handleImageLeave = (element: Element, done: () => void) => {
             >
               <img
                 :key="activeImage"
-                class="u-image-zoom-hover h-full w-full object-cover object-[78%_center]"
+                :class="['u-image-zoom-hover h-full w-full object-cover', activeImagePosition]"
                 :src="activeImage"
                 alt="Achievement placeholder image"
               />

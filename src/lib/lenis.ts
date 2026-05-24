@@ -53,3 +53,26 @@ export const scrollToTop = (immediate = false) => {
     })
   })
 }
+
+export const scrollToElement = (
+  target: string | HTMLElement,
+  options?: {
+    offset?: number
+    immediate?: boolean
+  },
+) => {
+  const lenisInstance = initLenis()
+
+  if (!lenisInstance) {
+    return Promise.resolve()
+  }
+
+  return new Promise<void>((resolve) => {
+    lenisInstance.scrollTo(target, {
+      force: true,
+      offset: options?.offset ?? 0,
+      immediate: options?.immediate ?? false,
+      onComplete: () => resolve(),
+    })
+  })
+}
