@@ -127,10 +127,10 @@ const handleImageLeave = (element: Element, done: () => void) => {
 <template>
   <section
     id="about"
-    class="min-h-screen flex items-center justify-center bg-cream py-16 px-4 mt-24"
+    class="min-h-screen bg-cream py-16 px-4 mt-24"
   >
-    <div class="max-w-7xl mx-auto w-full">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+    <div class="relative mx-auto w-full max-w-7xl">
+      <div class="md:pr-[calc(50%-1.5rem)]">
         <div ref="accordionContainer" class="flex min-h-112 flex-col">
           <UAccordion
             v-model="openAccordion"
@@ -150,7 +150,7 @@ const handleImageLeave = (element: Element, done: () => void) => {
             }"
           >
             <template #body="{ item }">
-              <ul class="list-disc space-y-2 pl-6">
+              <ul class="max-w-xl list-disc space-y-2 pl-6">
                 <li v-for="entry in item.entries" :key="entry">
                   {{ entry }}
                 </li>
@@ -158,10 +158,12 @@ const handleImageLeave = (element: Element, done: () => void) => {
             </template>
           </UAccordion>
         </div>
+      </div>
 
-        <div class="hidden md:flex md:justify-center md:px-4">
+      <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[calc(50%-1.5rem)] md:block">
+        <div class="sticky top-24 flex justify-center px-4">
           <div
-            class="image-stage u-image-zoom-hover-container w-full max-w-[500px] aspect-[5/6] rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
+            class="image-stage u-image-zoom-hover-container pointer-events-auto w-full max-w-[500px] aspect-[5/6] rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
           >
             <Transition
               mode="out-in"
