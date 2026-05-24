@@ -9,7 +9,7 @@ import achievePlaceholder from '@/assets/images/achieve_top.jpg'
 
 interface AchievementSection {
   label: string
-  content: string[]
+  entries: string[]
   image: string
   imagePosition: string
   value: string
@@ -21,7 +21,7 @@ const sections: AchievementSection[] = [
     value: 'long-van-group',
     image: achieve1,
     imagePosition: 'object-[38%_center]',
-    content: [
+    entries: [
       'Tham gia xây dựng thông điệp và định hướng hình ảnh thương hiệu nhằm bảo đảm sự nhất quán trên các nền tảng truyền thông.',
       'Tham gia xây dựng kế hoạch chuyển đổi và phát triển thương hiệu.',
       'Xây dựng kế hoạch truyền thông và định hướng nội dung cho các kênh social media.',
@@ -38,7 +38,7 @@ const sections: AchievementSection[] = [
     value: 'ton-pomina',
     image: achieve2,
     imagePosition: 'object-center',
-    content: [
+    entries: [
       'Sáng tạo nội dung, lên ý tưởng video các chiến dịch truyền thông thương hiệu, sản phẩm.(Truyền thông thương hiệu, Giới thiệu sản phẩm, Chuyên đề sản phẩm, Video Ads, Video Sự Kiện,...)',
       'Chịu trách nhiệm phát triển nội dung video trên các kênh social: Youtube, Facebook, Tiktok...',
       'Xây dựng kịch bản, concept hình ảnh video.',
@@ -52,7 +52,7 @@ const sections: AchievementSection[] = [
     value: 'saigontv',
     image: achieve3,
     imagePosition: 'object-[38%_center]',
-    content: [
+    entries: [
       'Đề xuất đề tài, lên ý tưởng cách khai thác nội dung và trực tiếp sản xuất các video ở dạng: Tin tức thời sự, phóng sự đời sống, sự kiện xã hội, youtube...',
       'Phối hợp cùng team Thiết kế, Dựng phim để hoàn thiện tin bài.',
       'Chương trình đã tham gia: Chuyện Trưa 12G (HTV); Tiêu Điểm 247 (HTV); Người Đưa Tin 24G (THVL); Tiêu Điểm Nóng (THTPCT); Lăng Nhìn Cuộc Sống (Yeah1 TV); Youtube SaigonTV Official...',
@@ -151,7 +151,7 @@ const handleImageLeave = (element: Element, done: () => void) => {
           >
             <template #body="{ item }">
               <ul class="list-disc space-y-2 pl-6">
-                <li v-for="entry in item.content" :key="entry">
+                <li v-for="entry in item.entries" :key="entry">
                   {{ entry }}
                 </li>
               </ul>
