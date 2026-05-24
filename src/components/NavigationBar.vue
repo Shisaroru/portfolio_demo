@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { animate, stagger } from 'animejs'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -52,15 +53,85 @@ const navigationMenuUi = {
   childDescription: 'font-cormorant',
 }
 
-const mobileNavItems = computed(() =>
-  navItems.value.map((item) => ({
-    label: item.label,
-    to: item.to ?? item.children?.[0]?.to,
-    click: () => {
-      isOpen.value = false
+const mobileButtonUi = {
+  base: 'text-maroon data-[state=open]:text-white',
+  label: 'font-cormorant text-lg text-current',
+  leadingIcon: 'text-current',
+  trailingIcon: 'text-current',
+}
+
+const isMobileItemActive = (to?: string) => {
+  return to ? route.path === to : false
+}
+
+const toggleMobileMenu = () => {
+  isOpen.value = !isOpen.value
+}
+
+const closeMobileMenu = () => {
+  isOpen.value = false
+}
+
+const handleMobileMenuEnter = (element: Element, done: () => void) => {
+  const htmlElement = element as HTMLElement
+  const items = htmlElement.querySelectorAll<HTMLElement>('[data-mobile-nav-item]')
+
+  htmlElement.style.overflow = 'hidden'
+  htmlElement.style.height = '0px'
+  htmlElement.style.opacity = '0'
+
+  items.forEach((item) => {
+    item.style.opacity = '0'
+    item.style.transform = 'translateY(-16px)'
+  })
+
+  animate(htmlElement, {
+    height: [0, htmlElement.scrollHeight],
+    opacity: [0, 1],
+    duration: 520,
+    ease: 'outExpo',
+    onComplete: () => {
+      htmlElement.style.height = 'auto'
+      htmlElement.style.opacity = '1'
+      htmlElement.style.overflow = 'visible'
+      done()
     },
-  })),
-)
+  })
+
+  animate(items, {
+    translateY: [-16, 0],
+    opacity: [0, 1],
+    delay: stagger(55, { start: 120 }),
+    duration: 420,
+    ease: 'outCubic',
+  })
+}
+
+const handleMobileMenuLeave = (element: Element, done: () => void) => {
+  const htmlElement = element as HTMLElement
+  const items = htmlElement.querySelectorAll<HTMLElement>('[data-mobile-nav-item]')
+
+  htmlElement.style.overflow = 'hidden'
+  htmlElement.style.height = `${htmlElement.scrollHeight}px`
+
+  animate(items, {
+    translateY: [0, -10],
+    opacity: [1, 0],
+    delay: stagger(35, { from: 'last' }),
+    duration: 180,
+    ease: 'inQuad',
+  })
+
+  animate(htmlElement, {
+    height: [htmlElement.scrollHeight, 0],
+    opacity: [1, 0],
+    duration: 300,
+    ease: 'inOutCubic',
+    onComplete: () => {
+      done()
+    },
+  })
+}
 </script>
 
 <template>
@@ -103,10 +174,12 @@ const mobileNavItems = computed(() =>
         <div class="md:hidden">
           <UButton
             icon="i-heroicons-bars-3"
-            color="primary"
+            :ui="mobileButtonUi"
+            color="neutral"
             variant="ghost"
-            class="u-button-hover-neutral"
-            @click="isOpen = !isOpen"
+            active-color="neutral"
+            class="text-maroon hover:bg-maroon hover:text-white"
+            @click="toggleMobileMenu"
             aria-label="Toggle navigation menu"
           />
         </div>
@@ -114,25 +187,62 @@ const mobileNavItems = computed(() =>
 
       <!-- Mobile Navigation Menu -->
       <Transition
-        enter-active-class="transition duration-200 ease-out"
-        enter-from-class="opacity-0 -translate-y-2"
-        enter-to-class="opacity-100 translate-y-0"
-        leave-active-class="transition duration-150 ease-in"
-        leave-from-class="opacity-100 translate-y-0"
-        leave-to-class="opacity-0 -translate-y-2"
+        :css="false"
+        @enter="handleMobileMenuEnter"
+        @leave="handleMobileMenuLeave"
       >
-        <div v-if="isOpen" class="md:hidden bg-cream-light border-t border-cream">
+        <div
+          v-if="isOpen"
+          class="md:hidden bg-cream-light border-t border-cream"
+        >
           <div class="px-4 py-4 space-y-2">
-            <UButton
-              v-for="item in mobileNavItems"
+            <div
+              v-for="item in navItems"
               :key="item.label"
-              :to="item.to"
-              variant="ghost"
-              class="u-button-hover-neutral w-full justify-start font-cormorant text-lg text-maroon"
-              @click="item.click"
+              class="space-y-2"
+              data-mobile-nav-item
             >
-              {{ item.label }}
-            </UButton>
+              <UButton
+                v-if="item.to"
+                :to="item.to"
+                :active="item.active ?? isMobileItemActive(item.to)"
+                :ui="mobileButtonUi"
+                color="neutral"
+                variant="ghost"
+                active-color="neutral"
+                active-class="bg-maroon text-white"
+                inactive-class="text-maroon"
+                class="w-full justify-start font-cormorant text-lg hover:bg-maroon hover:text-white"
+                @click="closeMobileMenu"
+              >
+                {{ item.label }}
+              </UButton>
+
+              <div v-else-if="item.children?.length" class="space-y-2">
+                <div
+                  class="px-5 pt-2 font-cormorant text-lg font-semibold text-maroon/80"
+                >
+                  {{ item.label }}
+                </div>
+
+                <UButton
+                  v-for="child in item.children"
+                  :key="child.to"
+                  :to="child.to"
+                  :active="isMobileItemActive(child.to)"
+                  :ui="mobileButtonUi"
+                  color="neutral"
+                  variant="ghost"
+                  active-color="neutral"
+                  active-class="bg-maroon text-white"
+                  inactive-class="text-maroon"
+                  class="w-full justify-start pl-8 font-cormorant text-lg hover:bg-maroon hover:text-white"
+                  @click="closeMobileMenu"
+                >
+                  {{ child.label }}
+                </UButton>
+              </div>
+            </div>
           </div>
         </div>
       </Transition>
