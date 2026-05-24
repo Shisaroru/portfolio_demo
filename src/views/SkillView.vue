@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useNavigationStore } from '../stores/navigationStore'
-
-const navigationStore = useNavigationStore()
+import skillImageUrl from '../assets/images/skill.jpg'
 
 interface SkillDescription {
   description: string
@@ -13,7 +10,7 @@ interface Skill {
   title: string
   descriptions: SkillDescription[]
 }
-const skills = ref<Skill[]>([
+const skills: Skill[] = [
   {
     title: 'Thương hiệu & Truyền thông',
     descriptions: [
@@ -50,29 +47,26 @@ const skills = ref<Skill[]>([
       { description: 'Quản lý công việc và đảm bảo tiến độ dự án' },
     ],
   },
-])
-
-const skillImageUrl =
-  navigationStore.pagingContents[navigationStore.pagingContents.length - 1]?.imageUrl || ''
+]
 </script>
 
 <template>
   <section id="skill" class="min-h-screen bg-cream py-32 px-4 my-4">
     <div class="max-w-7xl mx-auto w-full">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        <div class="hidden md:flex md:justify-center md:px-4">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-start">
+        <div class="hidden md:col-span-2 md:flex md:justify-center md:px-4">
           <div
-            class="u-image-zoom-hover-container w-full max-w-xl aspect-square rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
+            class="u-image-zoom-hover-container h-[520px] w-full max-w-2xl rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden lg:h-[640px]"
           >
             <img
-              class="u-image-zoom-hover h-full w-full object-contain object-center"
+              class="u-image-zoom-hover h-full w-full object-cover object-center"
               :src="skillImageUrl"
               alt="Skill image"
             />
           </div>
         </div>
 
-        <div class="w-full">
+        <div class="w-full md:col-span-3">
           <template v-for="(skill, index) in skills" :key="index">
             <div class="grid grid-cols-2 md:grid-cols-2 gap-6 py-8">
               <div class="bg-cream p-6 text-center">
@@ -99,6 +93,7 @@ const skillImageUrl =
                 </li>
               </div>
             </div>
+            <hr v-if="index < skills.length - 1" class="border-maroon/20" />
           </template>
         </div>
       </div>

@@ -5,6 +5,7 @@ const routes: readonly RouteRecordRaw[] = [
   { path: '/', name: 'About', component: () => import('../views/AboutView.vue') },
   { path: '/achieve', name: 'Achieve', component: () => import('../views/AchieveView.vue') },
   { path: '/skill', name: 'Skill', component: () => import('../views/SkillView.vue') },
+  { path: '/education', name: 'Education', component: () => import('../views/EducationView.vue') },
   {
     path: '/works', children: [
       {
