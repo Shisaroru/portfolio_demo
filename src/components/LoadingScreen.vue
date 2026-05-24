@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { animate, createDrawable, stagger } from 'animejs'
+import signatureMarkup from '@/assets/images/signature.svg?raw'
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -14,6 +16,9 @@ const blindAnimationDuration = 750
 const blindStaggerDelay = 70
 const blindsRevealDuration = blindAnimationDuration + blindStaggerDelay * (blindCount - 1)
 const isRevealing = ref(false)
+const signatureRef = ref<HTMLDivElement | null>(null)
+let signatureAnimation: ReturnType<typeof animate> | null = null
+let signatureAnimationPromise: Promise<void> = Promise.resolve()
 
 const waitForWindowLoad = () => {
   if (document.readyState === 'complete') {
@@ -55,13 +60,27 @@ const unlockScroll = () => {
 
 onMounted(async () => {
   lockScroll()
+  await nextTick()
+
+  const signaturePaths = signatureRef.value?.querySelectorAll<SVGPathElement>('path') ?? []
+
+  if (signaturePaths.length > 0) {
+    signatureAnimation = animate(createDrawable(Array.from(signaturePaths)), {
+      draw: ['0 0', '0 1'],
+      duration: 500,
+      delay: stagger(500),
+      ease: 'inOutSine',
+    })
+
+    signatureAnimationPromise = signatureAnimation.then(() => undefined)
+  }
 
   await router.isReady()
-  await nextTick()
   await Promise.all([
     waitForWindowLoad(),
     waitForFonts(),
     waitForMinimumDuration(),
+    signatureAnimationPromise,
   ])
   await waitForPaint(2)
 
@@ -78,6 +97,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+  signatureAnimation?.cancel()
   unlockScroll()
 })
 </script>
@@ -103,8 +123,12 @@ onBeforeUnmount(() => {
         ></span>
       </div>
 
-      <div class="loader-content flex w-full max-w-md flex-col items-center gap-6 text-center">
-        <p class="font-kollektif text-3xl uppercase tracking-[0.35em] text-maroon">Portfolio</p>
+      <div class="loader-content flex w-full max-w-xl flex-col items-center gap-6 text-center">
+        <div
+          ref="signatureRef"
+          class="loader-signature w-full max-w-[26rem] text-maroon"
+          v-html="signatureMarkup"
+        ></div>
         <div class="h-px w-full overflow-hidden bg-maroon/15">
           <div class="loader-bar h-full bg-maroon"></div>
         </div>
@@ -156,6 +180,21 @@ onBeforeUnmount(() => {
   z-index: 1;
 }
 
+.loader-signature :deep(svg) {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.loader-signature :deep(path) {
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
 .loader-revealing > :not(.loader-blinds) {
   opacity: 0;
   transform: scale(0.96);
@@ -165,8 +204,7 @@ onBeforeUnmount(() => {
 }
 
 .loader-revealing .loader-blind {
-  animation: blind-open var(--blind-animation-duration) cubic-bezier(0.76, 0, 0.24, 1)
-    forwards;
+  animation: blind-open var(--blind-animation-duration) cubic-bezier(0.76, 0, 0.24, 1) forwards;
   animation-delay: calc(var(--blind-index) * var(--blind-stagger-delay));
 }
 
