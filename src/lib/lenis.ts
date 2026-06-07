@@ -38,6 +38,14 @@ export const destroyLenis = () => {
   lenis = null
 }
 
+export const stopLenis = () => {
+  initLenis()?.stop()
+}
+
+export const startLenis = () => {
+  initLenis()?.start()
+}
+
 export const scrollToTop = (immediate = false) => {
   const lenisInstance = initLenis()
 

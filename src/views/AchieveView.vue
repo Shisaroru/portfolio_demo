@@ -72,7 +72,7 @@ const activeImage = computed(() => {
 const activeImagePosition = computed(() => {
   return (
     sections.find((section) => section.value === openAccordion.value)?.imagePosition ??
-    'object-[78%_center]'
+    'object-[50%_center]'
   )
 })
 
@@ -125,10 +125,7 @@ const handleImageLeave = (element: Element, done: () => void) => {
 </script>
 
 <template>
-  <section
-    id="about"
-    class="min-h-screen bg-cream py-16 px-4 mt-24"
-  >
+  <section id="about" class="min-h-screen bg-cream py-16 px-4 mt-24">
     <div class="relative mx-auto w-full max-w-7xl">
       <div class="md:pr-[calc(50%-1.5rem)]">
         <div ref="accordionContainer" class="flex min-h-112 flex-col">
@@ -160,10 +157,12 @@ const handleImageLeave = (element: Element, done: () => void) => {
         </div>
       </div>
 
-      <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[calc(50%-1.5rem)] md:block">
+      <div
+        class="pointer-events-none absolute inset-y-0 right-0 hidden w-[calc(50%-1.5rem)] md:block"
+      >
         <div class="sticky top-24 flex justify-center px-4">
           <div
-            class="image-stage u-image-zoom-hover-container pointer-events-auto w-full max-w-[500px] aspect-[5/6] rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
+            class="image-stage u-image-zoom-hover-container pointer-events-auto w-full max-w-[500px] aspect-[23/27] rounded-lg bg-linear-to-br from-maroon to-maroon/80 flex items-center justify-center overflow-hidden"
           >
             <Transition
               mode="out-in"

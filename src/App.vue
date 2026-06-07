@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useColorMode } from '#imports'
 import NavigationBar from '@/components/NavigationBar.vue'
 import Footer from '@/components/FooterComponent.vue'
 import LoadingScreen from '@/components/LoadingScreen.vue'
@@ -7,6 +8,11 @@ import LoadingScreen from '@/components/LoadingScreen.vue'
 const isAppLoading = ref(true)
 const showLoadingScreen = ref(true)
 const cachedViewNames = ['LongVanView', 'PoniaView', 'SaiGonTVView']
+const colorMode = useColorMode()
+
+if (!colorMode.forced) {
+  colorMode.preference = 'dark'
+}
 
 const handleAppReady = () => {
   isAppLoading.value = false

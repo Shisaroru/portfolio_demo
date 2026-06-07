@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { animate, stagger } from 'animejs'
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { startLenis, stopLenis } from '@/lib/lenis'
 
 const route = useRoute()
 
@@ -71,6 +72,26 @@ const toggleMobileMenu = () => {
 const closeMobileMenu = () => {
   isOpen.value = false
 }
+
+watch(isOpen, (open) => {
+  if (open) {
+    stopLenis()
+    return
+  }
+
+  startLenis()
+})
+
+watch(
+  () => route.fullPath,
+  () => {
+    closeMobileMenu()
+  },
+)
+
+onBeforeUnmount(() => {
+  startLenis()
+})
 
 const handleMobileMenuEnter = (element: Element, done: () => void) => {
   const htmlElement = element as HTMLElement
@@ -145,7 +166,9 @@ const handleMobileMenuLeave = (element: Element, done: () => void) => {
 </script>
 
 <template>
-  <nav class="sticky top-0 z-50 bg-cream/75 backdrop-blur-md shadow-sm supports-[backdrop-filter]:bg-cream/60">
+  <nav
+    class="sticky top-0 z-50 bg-cream/75 backdrop-blur-md shadow-sm supports-[backdrop-filter]:bg-cream/60"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         <!-- Logo/Brand -->
@@ -189,90 +212,92 @@ const handleMobileMenuLeave = (element: Element, done: () => void) => {
             variant="ghost"
             active-color="neutral"
             class="text-maroon hover:bg-maroon hover:text-white"
+            type="button"
             @click="toggleMobileMenu"
             aria-label="Toggle navigation menu"
           />
         </div>
       </div>
+    </div>
+  </nav>
 
-      <!-- Mobile Navigation Menu -->
-      <Transition :css="false" @enter="handleMobileMenuEnter" @leave="handleMobileMenuLeave">
+  <!-- Mobile Navigation Menu -->
+  <Teleport to="body">
+    <Transition :css="false" @enter="handleMobileMenuEnter" @leave="handleMobileMenuLeave">
+      <div v-if="isOpen" class="fixed inset-0 z-[9999] md:hidden">
         <div
-          v-if="isOpen"
-          class="fixed inset-0 z-50 md:hidden"
-        >
-          <div class="absolute inset-0 bg-maroon/25 backdrop-blur-sm" @click="closeMobileMenu"></div>
+          class="absolute inset-0 bg-maroon/25 backdrop-blur-sm"
+          @click="closeMobileMenu"
+        ></div>
 
-          <div
-            data-mobile-nav-panel
-            class="absolute right-0 top-0 flex h-full w-[min(85vw,22rem)] flex-col bg-cream-light shadow-2xl border-l border-cream"
-          >
-            <div class="flex items-center justify-between border-b border-cream px-4 py-5">
-              <span class="font-arimo text-2xl font-semibold text-maroon">Menu</span>
+        <div
+          data-mobile-nav-panel
+          class="absolute right-0 top-0 flex h-dvh w-[min(85vw,22rem)] flex-col bg-cream-light shadow-2xl border-l border-cream"
+        >
+          <div class="flex items-center justify-between border-b border-cream px-4 py-5">
+            <span class="font-arimo text-2xl font-semibold text-maroon">Menu</span>
+            <UButton
+              icon="i-heroicons-x-mark"
+              :ui="mobileButtonUi"
+              color="neutral"
+              variant="ghost"
+              active-color="neutral"
+              class="text-maroon hover:bg-maroon hover:text-white"
+              type="button"
+              aria-label="Close navigation menu"
+              @click="closeMobileMenu"
+            />
+          </div>
+
+          <div class="flex-1 overflow-y-auto px-4 py-4 space-y-2">
+            <div
+              v-for="item in navItems"
+              :key="item.label"
+              class="space-y-2"
+              data-mobile-nav-item
+            >
               <UButton
-                icon="i-heroicons-x-mark"
+                v-if="item.to"
+                :to="item.to"
+                :active="item.active ?? isMobileItemActive(item.to)"
                 :ui="mobileButtonUi"
                 color="neutral"
                 variant="ghost"
                 active-color="neutral"
-                class="text-maroon hover:bg-maroon hover:text-white"
-                aria-label="Close navigation menu"
+                active-class="bg-maroon text-white"
+                inactive-class="text-maroon"
+                class="w-full justify-start font-arimo text-lg hover:bg-maroon hover:text-white"
                 @click="closeMobileMenu"
-              />
-            </div>
-
-            <div class="flex-1 overflow-y-auto px-4 py-4 space-y-2">
-              <div
-                v-for="item in navItems"
-                :key="item.label"
-                class="space-y-2"
-                data-mobile-nav-item
               >
+                {{ item.label }}
+              </UButton>
+
+              <div v-else-if="item.children?.length" class="space-y-2">
+                <div class="px-5 pt-2 font-arimo text-lg font-semibold text-maroon/80">
+                  {{ item.label }}
+                </div>
+
                 <UButton
-                  v-if="item.to"
-                  :to="item.to"
-                  :active="item.active ?? isMobileItemActive(item.to)"
+                  v-for="child in item.children"
+                  :key="child.to"
+                  :to="child.to"
+                  :active="isMobileItemActive(child.to)"
                   :ui="mobileButtonUi"
                   color="neutral"
                   variant="ghost"
                   active-color="neutral"
                   active-class="bg-maroon text-white"
                   inactive-class="text-maroon"
-                  class="w-full justify-start font-arimo text-lg hover:bg-maroon hover:text-white"
+                  class="w-full justify-start pl-8 font-arimo text-lg hover:bg-maroon hover:text-white"
                   @click="closeMobileMenu"
                 >
-                  {{ item.label }}
+                  {{ child.label }}
                 </UButton>
-
-                <div v-else-if="item.children?.length" class="space-y-2">
-                  <div
-                    class="px-5 pt-2 font-arimo text-lg font-semibold text-maroon/80"
-                  >
-                    {{ item.label }}
-                  </div>
-
-                  <UButton
-                    v-for="child in item.children"
-                    :key="child.to"
-                    :to="child.to"
-                    :active="isMobileItemActive(child.to)"
-                    :ui="mobileButtonUi"
-                    color="neutral"
-                    variant="ghost"
-                    active-color="neutral"
-                    active-class="bg-maroon text-white"
-                    inactive-class="text-maroon"
-                    class="w-full justify-start pl-8 font-arimo text-lg hover:bg-maroon hover:text-white"
-                    @click="closeMobileMenu"
-                  >
-                    {{ child.label }}
-                  </UButton>
-                </div>
               </div>
             </div>
           </div>
         </div>
-      </Transition>
-    </div>
-  </nav>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
