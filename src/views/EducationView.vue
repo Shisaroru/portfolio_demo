@@ -32,7 +32,7 @@ const educationSections: EducationSection[] = [
                   v-for="(line, lineIndex) in section.titleLines"
                   :key="lineIndex"
                   v-text-reveal
-                  class="font-cormorant text-xl"
+                  class="font-arimo text-xl"
                   :class="lineIndex === 0 ? 'font-normal' : 'font-medium'"
                 >
                   {{ line }}
@@ -41,7 +41,7 @@ const educationSections: EducationSection[] = [
             </div>
 
             <ul
-              class="flex h-full flex-col justify-center space-y-3 font-cormorant text-lg font-semibold uppercase text-maroon"
+              class="flex h-full flex-col justify-center space-y-3 font-arimo text-lg font-semibold uppercase text-maroon"
             >
               <li
                 v-for="(description, descIndex) in section.descriptions"

@@ -70,11 +70,11 @@ const skills: Skill[] = [
           <template v-for="(skill, index) in skills" :key="index">
             <div class="grid grid-cols-2 md:grid-cols-2 gap-6 py-8">
               <div class="bg-cream p-6 text-center">
-                <p v-text-reveal class="font-cormorant text-xl text-maroon font-semibold">
+                <p v-text-reveal class="font-arimo text-xl text-maroon font-semibold">
                   {{ skill.title }}
                 </p>
               </div>
-              <div class="font-cormorant">
+              <div class="font-arimo">
                 <li
                   v-text-reveal="{ delayStep: 500 }"
                   v-for="(description, descIndex) in skill.descriptions"

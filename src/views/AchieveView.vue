@@ -142,11 +142,11 @@ const handleImageLeave = (element: Element, done: () => void) => {
               item: 'overflow-hidden bg-transparent',
               header: 'w-full',
               trigger:
-                'flex min-h-28 w-full items-center px-8 py-10 text-left font-cormorant text-xl font-semibold text-maroon transition-colors duration-200',
+                'flex min-h-28 w-full items-center px-8 py-10 text-left font-arimo text-xl font-semibold text-maroon transition-colors duration-200',
               label: 'flex flex-1 items-center justify-center text-center',
               trailingIcon: 'text-maroon',
               content: 'pt-4 mb-6',
-              body: 'px-0 py-0 font-cormorant font-semibold text-lg leading-relaxed text-maroon',
+              body: 'px-0 py-0 font-arimo font-semibold text-lg leading-relaxed text-maroon',
             }"
           >
             <template #body="{ item }">

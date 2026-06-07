@@ -47,15 +47,15 @@ const navItems = computed(() => [
 const isOpen = ref(false)
 
 const navigationMenuUi = {
-  link: 'px-5 font-cormorant text-lg',
-  childLink: 'font-cormorant',
-  childLinkLabel: 'font-cormorant text-base',
-  childDescription: 'font-cormorant',
+  link: 'px-5 font-arimo text-lg',
+  childLink: 'font-arimo',
+  childLinkLabel: 'font-arimo text-base',
+  childDescription: 'font-arimo',
 }
 
 const mobileButtonUi = {
   base: 'text-maroon data-[state=open]:text-white',
-  label: 'font-cormorant text-lg text-current',
+  label: 'font-arimo text-lg text-current',
   leadingIcon: 'text-current',
   trailingIcon: 'text-current',
 }
@@ -145,7 +145,7 @@ const handleMobileMenuLeave = (element: Element, done: () => void) => {
 </script>
 
 <template>
-  <nav class="sticky top-0 z-50 bg-cream border-b-2 border-cream-light">
+  <nav class="sticky top-0 z-50 bg-cream/75 backdrop-blur-md shadow-sm supports-[backdrop-filter]:bg-cream/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         <!-- Logo/Brand -->
@@ -163,7 +163,7 @@ const handleMobileMenuLeave = (element: Element, done: () => void) => {
           >
             <template #item-label="{ item, active }">
               <span
-                class="font-cormorant text-lg transition-colors"
+                class="font-arimo text-lg transition-colors"
                 :class="active ? 'text-white' : 'text-maroon'"
               >
                 {{ item.label }}
@@ -208,7 +208,7 @@ const handleMobileMenuLeave = (element: Element, done: () => void) => {
             class="absolute right-0 top-0 flex h-full w-[min(85vw,22rem)] flex-col bg-cream-light shadow-2xl border-l border-cream"
           >
             <div class="flex items-center justify-between border-b border-cream px-4 py-5">
-              <span class="font-cormorant text-2xl font-semibold text-maroon">Menu</span>
+              <span class="font-arimo text-2xl font-semibold text-maroon">Menu</span>
               <UButton
                 icon="i-heroicons-x-mark"
                 :ui="mobileButtonUi"
@@ -238,7 +238,7 @@ const handleMobileMenuLeave = (element: Element, done: () => void) => {
                   active-color="neutral"
                   active-class="bg-maroon text-white"
                   inactive-class="text-maroon"
-                  class="w-full justify-start font-cormorant text-lg hover:bg-maroon hover:text-white"
+                  class="w-full justify-start font-arimo text-lg hover:bg-maroon hover:text-white"
                   @click="closeMobileMenu"
                 >
                   {{ item.label }}
@@ -246,7 +246,7 @@ const handleMobileMenuLeave = (element: Element, done: () => void) => {
 
                 <div v-else-if="item.children?.length" class="space-y-2">
                   <div
-                    class="px-5 pt-2 font-cormorant text-lg font-semibold text-maroon/80"
+                    class="px-5 pt-2 font-arimo text-lg font-semibold text-maroon/80"
                   >
                     {{ item.label }}
                   </div>
@@ -262,7 +262,7 @@ const handleMobileMenuLeave = (element: Element, done: () => void) => {
                     active-color="neutral"
                     active-class="bg-maroon text-white"
                     inactive-class="text-maroon"
-                    class="w-full justify-start pl-8 font-cormorant text-lg hover:bg-maroon hover:text-white"
+                    class="w-full justify-start pl-8 font-arimo text-lg hover:bg-maroon hover:text-white"
                     @click="closeMobileMenu"
                   >
                     {{ child.label }}

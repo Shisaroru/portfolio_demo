@@ -4,10 +4,10 @@
       <div class="grid w-full grid-cols-1 gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
         <div class="space-y-6 text-center md:text-left">
           <p class="font-kollektif text-sm uppercase tracking-[0.45em] text-maroon/70">Error 404</p>
-          <h1 class="font-cormorant text-6xl font-semibold leading-none text-maroon md:text-8xl">
+          <h1 class="font-arimo text-6xl font-semibold leading-none text-maroon md:text-8xl">
             Page not found
           </h1>
-          <p class="max-w-xl font-cormorant text-2xl italic text-maroon/80 md:text-3xl">
+          <p class="max-w-xl font-arimo text-2xl italic text-maroon/80 md:text-3xl">
             The page you were trying to reach does not exist, or the link is no longer available.
           </p>
           <RouterLink

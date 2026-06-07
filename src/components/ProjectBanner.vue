@@ -6,13 +6,13 @@
     <div
       class="bg-[#D9D9D9] opacity-70 p-8 rounded-lg w-full h-full flex flex-col items-center justify-center"
     >
-      <h1 v-text-reveal class="text-4xl font-bold mb-6 text-black text-center font-cormorant">
+      <h1 v-text-reveal class="text-4xl font-bold mb-6 text-black text-center font-arimo">
         {{ title }}
       </h1>
 
       <div
         ref="textContentRef"
-        class="space-y-4 text-black text-center max-w-4xl font-cormorant font-bold"
+        class="space-y-4 text-black text-center max-w-4xl font-arimo font-bold"
       >
         <p v-if="dissapearTextContent" class="overflow-hidden opacity-0">
           {{ dissapearTextContent }}

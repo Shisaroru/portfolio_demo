@@ -132,7 +132,7 @@ onBeforeUnmount(() => {
         <div class="h-px w-full overflow-hidden bg-maroon/15">
           <div class="loader-bar h-full bg-maroon"></div>
         </div>
-        <p class="font-cormorant text-lg italic text-maroon/80">
+        <p class="font-arimo text-lg italic text-maroon/80">
           Preparing fonts, motion, and layout...
         </p>
       </div>

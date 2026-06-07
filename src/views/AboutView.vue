@@ -4,7 +4,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <!-- Left side: Content -->
         <div class="space-y-6">
-          <blockquote class="font-cormorant text-base leading-relaxed text-maroon text-center">
+          <blockquote class="font-arimo text-base leading-relaxed text-maroon text-center">
             <!-- Content will be added here -->
             <p class="italic mb-4">
               “Người kể những câu chuyện thương hiệu theo góc nhìn truyền thông sáng tạo, góp phần
@@ -14,7 +14,7 @@
 
           <div class="h-1 w-24 bg-maroon"></div>
 
-          <div class="font-cormorant text-base leading-relaxed text-maroon font-semibold">
+          <div class="font-arimo text-base leading-relaxed text-maroon font-semibold">
             <!-- Main bio content -->
             <p>
               Tôi đam mê kể những câu chuyện thương hiệu theo góc nhìn truyền thông sáng tạo, cùng

@@ -15,7 +15,7 @@ export default {
         maroon: '#452829'
       },
       fontFamily: {
-        cormorant: ['Cormorant', 'serif'],
+        arimo: ['Arimo', 'sans-serif'],
         kollektif: ['Kollektif', 'sans-serif'],
         'sofia-pro': ['Sofia Pro', 'sans-serif'],
       }
