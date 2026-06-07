@@ -5,7 +5,7 @@
       :key="index"
       :ref="(el) => setVideoRef(index, el as HTMLDivElement)"
       :data-video-id="index"
-      class="u-image-zoom-hover-container relative w-full h-80 rounded-lg shadow-lg video-item overflow-hidden bg-black"
+      class="u-image-zoom-hover-container relative w-full h-80 rounded-lg shadow-lg video-item overflow-hidden bg-black p-4"
       :style="{
         transform: `translateX(${index % 2 === 0 ? '-' : ''}1000px)`,
       }"
@@ -13,7 +13,7 @@
       <button
         v-if="isYoutubeVideo(videoUrl) && !loadedVideos[getVideoKey(videoUrl, index)]"
         type="button"
-        class="group relative h-full w-full"
+        class="group relative h-full w-full overflow-hidden rounded-md"
         :aria-label="`Play ${getVideoTitle(videoUrl, index)}`"
         @click="loadVideo(videoUrl, index)"
       >
@@ -36,7 +36,7 @@
 
       <iframe
         v-else
-        class="u-image-zoom-hover h-full w-full"
+        class="u-image-zoom-hover h-full w-full rounded-md"
         :src="getEmbedUrl(videoUrl)"
         :title="getVideoTitle(videoUrl, index)"
         frameborder="0"

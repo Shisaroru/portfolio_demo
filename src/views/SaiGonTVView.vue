@@ -20,8 +20,27 @@ import VideoContainer from '@/components/VideosContainer.vue'
 
 import projectBg from '@/assets/images/project_bg_3.png'
 
+type VideoSource =
+  | string
+  | {
+      type: 'youtube' | 'facebook' | 'drive'
+      url: string
+      title: string
+    }
+
 const title = 'SaigonTV'
-const videoUrls = ['dQw4w9WgXcQ', '3JZ_D3ELwOQ', 'eY52Zsg-KVI', 'DLzxrzFCyOs', '9bZkp7q19f0']
+const videoUrls: VideoSource[] = [
+  'https://www.youtube.com/watch?si=61hHOJWaX0OQ0Ck3&v=8KD63itnz4g&feature=youtu.be',
+  'https://youtu.be/rok8vDrZsAM?si=SjUAlmID3_z2RyMk',
+  'https://youtu.be/EyN7ECMCm2Q',
+  'https://youtu.be/zVLYIFO4-L0?si=QO1BLqM66hgC2NjB',
+  'https://youtu.be/0zs_KiS8hSc?si=EyEmqPdbU4dgZbnN',
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2FMnewsvn%2Fvideos%2F629092794724698%2F&show_text=false&width=476&t=0',
+    title: 'SaigonTV Facebook video',
+  },
+]
 const mainTextContent =
   'Chính nền tảng báo chí này đã giúp tôi hình thành tư duy Storytelling, tư duy sáng tạo nội dung, điều vẫn tiếp tục theo tôi trong hành trình làm truyền thông thương hiệu sau này.'
 

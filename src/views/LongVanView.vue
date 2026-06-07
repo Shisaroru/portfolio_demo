@@ -48,6 +48,26 @@ const videoUrls: VideoSource[] = [
     url: 'https://drive.google.com/file/d/13JR54YZsrRQVph3WgPYQ3IQt7SQPt1q2',
     title: 'Long Van Group video 4',
   },
+  {
+    type: 'youtube',
+    url: 'https://youtu.be/zDqQxu90SRs?si=MbHoAztqLSk8O3Op',
+    title: 'Long Van Group video 5',
+  },
+  {
+    type: 'youtube',
+    url: 'https://youtu.be/AOvV0XQy4-g?si=sWeJDkwti-7SreD3',
+    title: 'Long Van Group video 6',
+  },
+  {
+    type: 'youtube',
+    url: 'https://youtu.be/CwIIQlTdELQ?si=5jm_Kan1H4Wq7X8R',
+    title: 'Long Van Group video 7',
+  },
+  {
+    type: 'youtube',
+    url: 'https://youtu.be/U9w5FOGEcRs?si=7joeRyAWeezDDTQA',
+    title: 'Long Van Group video 8',
+  },
 ]
 const mainTextContent =
   'Tôi tham gia phát triển nội dung truyền thông đa nền tảng, từ ý tưởng, xây dựng nội dung đến trực tiếp sản xuất hình ảnh và video. Quá trình này giúp tôi hiểu rõ hơn cách một thương hiệu công nghiệp xây dựng hình ảnh và truyền tải giá trị đến công chúng. Mỗi video hay hình ảnh không chỉ là nội dung truyền thông mà còn là cách kể câu chuyện về sản phẩm, con người và văn hóa doanh nghiệp. Đây cũng là giai đoạn tôi học cách kết hợp giữa tư duy Brand Communication và Media Production, để mỗi nội dung không chỉ đẹp mà còn phục vụ đúng mục tiêu truyền thông và góp phần xây dựng hình ảnh thương hiệu nhất quán.'

@@ -21,7 +21,16 @@ import VideoContainer from '@/components/VideosContainer.vue'
 import projectBg from '@/assets/images/project_bg_2.png'
 
 const title = 'Tôn Pomina'
-const videoUrls = ['dQw4w9WgXcQ', '3JZ_D3ELwOQ', 'eY52Zsg-KVI', 'DLzxrzFCyOs', '9bZkp7q19f0']
+const videoUrls = [
+  'https://youtu.be/n3FPnSKeDcI?si=RP4bu8gjlSszURIl',
+  'https://youtu.be/gw2YWYaJFV8?si=xMiP0S-kinaXehDn',
+  'https://youtu.be/91ZG56j7t-M?si=8GKiBupW60jJIThn',
+  'https://youtu.be/jUC_W_gJ3OI?si=PyYOCYBQ46Mi6rk6',
+  'https://youtu.be/RhPqIpSu6Ow?si=KTceftjC0j6DlVM0',
+  'https://youtu.be/AVl5dOY-PmE?si=dmvIOQmp4glE1S1f',
+  'https://youtu.be/1Yyfa3D8LxE?si=BrfDCLOiBh7SfAz9',
+  'https://youtu.be/C46jZnFJS5Y?si=DY93Rixi0ZU2SDYs',
+]
 const textHolder =
   'Tại Tôn Pomina, tôi tham gia sản xuất nhiều thể loại video Marketing khác nhau, từ video sản phẩm đến phóng sự khách hàng và video ADS. Tôi truyền tải những thông điệp truyền thống theo cách riêng hiện đại, nhưng vẫn giữ được giá trị cốt lõi của thương hiệu.Thử thách lớn nhất là làm sao để một sản phẩm kỹ thuật trở nên gần gũi với người xem. Thông qua cách kể chuyện bằng hình ảnh sáng tạo, cấu trúc nội dung rõ ràng và nhịp dựng phù hợp, tôi dần học được cách cân bằng giữa tính sáng tạo của nội dung và mục tiêu truyền thông của doanh nghiệp.'
 
