@@ -11,16 +11,16 @@
       }"
     >
       <button
-        v-if="!loadedVideos[videoUrl]"
+        v-if="isYoutubeVideo(videoUrl) && !loadedVideos[getVideoKey(videoUrl, index)]"
         type="button"
         class="group relative h-full w-full"
-        :aria-label="`Play YouTube video ${index + 1}`"
-        @click="loadVideo(videoUrl)"
+        :aria-label="`Play ${getVideoTitle(videoUrl, index)}`"
+        @click="loadVideo(videoUrl, index)"
       >
         <img
           class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           :src="getThumbnailUrl(videoUrl)"
-          :alt="`YouTube video ${index + 1} thumbnail`"
+          :alt="`${getVideoTitle(videoUrl, index)} thumbnail`"
           loading="lazy"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10"></div>
@@ -38,7 +38,7 @@
         v-else
         class="u-image-zoom-hover h-full w-full"
         :src="getEmbedUrl(videoUrl)"
-        title="YouTube video player"
+        :title="getVideoTitle(videoUrl, index)"
         frameborder="0"
         allow="
           accelerometer;
@@ -58,8 +58,16 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { animate } from 'animejs'
 
+type VideoSource =
+  | string
+  | {
+      type: 'youtube' | 'facebook' | 'drive'
+      url: string
+      title?: string
+    }
+
 interface Props {
-  videoUrls: string[]
+  videoUrls: VideoSource[]
 }
 
 defineProps<Props>()
@@ -73,16 +81,67 @@ const setVideoRef = (index: number, el: HTMLDivElement) => {
   }
 }
 
-const loadVideo = (videoUrl: string) => {
-  loadedVideos.value[videoUrl] = true
+const loadVideo = (videoUrl: VideoSource, index: number) => {
+  loadedVideos.value[getVideoKey(videoUrl, index)] = true
 }
 
-const getThumbnailUrl = (videoUrl: string) => {
-  return `https://i.ytimg.com/vi/${videoUrl}/hqdefault.jpg`
+const getVideoUrl = (videoUrl: VideoSource) => {
+  return typeof videoUrl === 'string' ? videoUrl : videoUrl.url
 }
 
-const getEmbedUrl = (videoUrl: string) => {
-  return `https://www.youtube-nocookie.com/embed/${videoUrl}?autoplay=1&rel=0`
+const getVideoType = (videoUrl: VideoSource) => {
+  if (typeof videoUrl !== 'string') {
+    return videoUrl.type
+  }
+
+  return 'youtube'
+}
+
+const getYoutubeId = (videoUrl: VideoSource) => {
+  const url = getVideoUrl(videoUrl)
+  const watchMatch = url.match(/[?&]v=([^&]+)/)
+  const shortMatch = url.match(/youtu\.be\/([^?&]+)/)
+  const embedMatch = url.match(/embed\/([^?&]+)/)
+
+  return watchMatch?.[1] || shortMatch?.[1] || embedMatch?.[1] || url
+}
+
+const getDrivePreviewUrl = (url: string) => {
+  const fileMatch = url.match(/\/file\/d\/([^/]+)/)
+  const idMatch = url.match(/[?&]id=([^&]+)/)
+  const fileId = fileMatch?.[1] || idMatch?.[1]
+
+  return fileId ? `https://drive.google.com/file/d/${fileId}/preview` : url
+}
+
+const getVideoKey = (videoUrl: VideoSource, index: number) => {
+  return `${index}-${getVideoUrl(videoUrl)}`
+}
+
+const getVideoTitle = (videoUrl: VideoSource, index: number) => {
+  return typeof videoUrl === 'string' ? `Video ${index + 1}` : videoUrl.title || `Video ${index + 1}`
+}
+
+const isYoutubeVideo = (videoUrl: VideoSource) => {
+  return getVideoType(videoUrl) === 'youtube'
+}
+
+const getThumbnailUrl = (videoUrl: VideoSource) => {
+  return `https://i.ytimg.com/vi/${getYoutubeId(videoUrl)}/hqdefault.jpg`
+}
+
+const getEmbedUrl = (videoUrl: VideoSource) => {
+  const url = getVideoUrl(videoUrl)
+
+  if (getVideoType(videoUrl) === 'facebook') {
+    return url
+  }
+
+  if (getVideoType(videoUrl) === 'drive') {
+    return getDrivePreviewUrl(url)
+  }
+
+  return `https://www.youtube-nocookie.com/embed/${getYoutubeId(videoUrl)}?autoplay=1&rel=0`
 }
 
 const handleScroll = () => {
