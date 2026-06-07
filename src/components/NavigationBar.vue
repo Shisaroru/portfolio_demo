@@ -47,7 +47,7 @@ const navItems = computed(() => [
 const isOpen = ref(false)
 
 const navigationMenuUi = {
-  link: 'px-5 font-arimo text-lg',
+  link: 'px-5 font-arimo text-lg text-maroon',
   childLink: 'font-arimo',
   childLinkLabel: 'font-arimo text-base',
   childDescription: 'font-arimo',

@@ -34,11 +34,6 @@ const videoUrls: VideoSource[] = [
     title: 'Long Van Group YouTube video',
   },
   {
-    type: 'facebook',
-    url: 'https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Flongvangroup.com.vn%2Fvideos%2F475195578289647%2F&show_text=false&width=560&t=0',
-    title: 'Long Van Group Facebook video',
-  },
-  {
     type: 'drive',
     url: 'https://drive.google.com/file/d/1kyoKcQLCizLRviFxBN0WqJbVq4wIHjY-/view',
     title: 'Long Van Group video 3',
@@ -67,6 +62,11 @@ const videoUrls: VideoSource[] = [
     type: 'youtube',
     url: 'https://youtu.be/U9w5FOGEcRs?si=7joeRyAWeezDDTQA',
     title: 'Long Van Group video 8',
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Flongvangroup.com.vn%2Fvideos%2F475195578289647%2F&show_text=false&width=560&t=0',
+    title: 'Long Van Group Facebook video',
   },
 ]
 const mainTextContent =

@@ -1,14 +1,12 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 px-12 pb-5">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 px-12 pb-5 overflow-x-clip">
     <div
       v-for="(videoUrl, index) in videoUrls"
       :key="index"
       :ref="(el) => setVideoRef(index, el as HTMLDivElement)"
       :data-video-id="index"
       class="u-image-zoom-hover-container relative w-full h-80 rounded-lg shadow-lg video-item overflow-hidden bg-black p-4"
-      :style="{
-        transform: `translateX(${index % 2 === 0 ? '-' : ''}1000px)`,
-      }"
+      :style="{ transform: `translateX(${getInitialTranslate(index)}px)` }"
     >
       <button
         v-if="isYoutubeVideo(videoUrl) && !loadedVideos[getVideoKey(videoUrl, index)]"
@@ -79,6 +77,10 @@ const setVideoRef = (index: number, el: HTMLDivElement) => {
   if (el) {
     videoRefs.value[index] = el
   }
+}
+
+const getInitialTranslate = (index: number) => {
+  return index % 2 === 0 ? -1000 : 1000
 }
 
 const loadVideo = (videoUrl: VideoSource, index: number) => {
@@ -154,7 +156,7 @@ const handleScroll = () => {
     const scrollThreshold = 400 + pairIndex * 350
 
     // Determine initial transform direction (even indices go left, odd go right)
-    const initialTranslate = index % 2 === 0 ? -1000 : 1000
+    const initialTranslate = getInitialTranslate(index)
 
     if (window.scrollY > scrollThreshold) {
       animate(video, {
